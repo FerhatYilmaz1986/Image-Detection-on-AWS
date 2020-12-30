@@ -35,4 +35,11 @@ public class Label {
 					String[] data = line.split(" = ");
 					if(data.length == 2) {
 						credentials.put(data[0], data[1]);  
-					}   
+					}
+				}
+			}
+			myReader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Credentials file can not be read.");
+			e.printStackTrace();
+		}
