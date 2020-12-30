@@ -27,9 +27,6 @@ public class Label {
 		// Read credentials from credential file
 		HashMap<String, String> credentials = new HashMap<String, String>();
 		try {
-			// URL url = Label.class.getClassLoader().getResource("credentials.txt");
-			// System.out.println(url);
-			// File myObj = new File(url.getPath());
 			File myObj = new File("cred.txt");
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
