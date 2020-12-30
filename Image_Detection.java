@@ -43,3 +43,13 @@ public class Label {
 			System.out.println("Credentials file can not be read.");
 			e.printStackTrace();
 		}
+
+        // Create clients for AWS services using Session Credentials that read from the file in previous step
+		BasicSessionCredentials  creds = new BasicSessionCredentials (credentials.get("access_key_id"),credentials.get("secret_access_key"),credentials.get("session_token")); 
+		AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(creds))
+
+				.withRegion(Regions.US_EAST_1).build();
+		AmazonSQS sqs = AmazonSQSClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(creds))
+				.withRegion(Regions.US_EAST_1).build();
