@@ -44,7 +44,7 @@ public class Label {
 			e.printStackTrace();
 		}
 
-        // Create clients for AWS services using Session Credentials that read from the file in previous step
+ // Create clients for AWS services using Session Credentials that read from the file in previous step
 		BasicSessionCredentials  creds = new BasicSessionCredentials (credentials.get("access_key_id"),credentials.get("secret_access_key"),credentials.get("session_token")); 
 		AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(creds))
@@ -53,3 +53,5 @@ public class Label {
 		AmazonSQS sqs = AmazonSQSClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(creds))
 				.withRegion(Regions.US_EAST_1).build();
+
+//Read images from S3 bucket and detect labels using AWS recognition
