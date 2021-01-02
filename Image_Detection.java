@@ -55,3 +55,40 @@ public class Label {
 				.withRegion(Regions.US_EAST_1).build();
 
 //Read images from S3 bucket and detect labels using AWS recognition
+// Send image ids when car is detected in an image through AWS SQS
+for (int i = 1; i <=10 ; i++) {
+			DetectLabelsRequest request = new DetectLabelsRequest()
+					.withImage(new Image()
+							.withS3Object(new S3Object()
+									.withName(java.lang.String.format("%d.jpg",i)).withBucket(bucket)))
+					.withMaxLabels(10)
+					.withMinConfidence(90F);
+
+			try {
+				DetectLabelsResult Labelsresult = rekognitionClient.detectLabels(request);
+				List<com.amazonaws.services.rekognition.model.Label> labels = Labelsresult.getLabels();
+
+				for (com.amazonaws.services.rekognition.model.Label label: labels) {
+					System.out.println(label.getName() + ": " + label.getConfidence().toString());
+					if (label.getName().equals("Car") && label.getConfidence() >= 90) {
+						System.out.println("Car detected: "); //+ current.getKey());
+						com.amazonaws.services.sqs.model.SendMessageRequest sendMessageRequest = new com.amazonaws.services.sqs.model.SendMessageRequest(
+								myqueue,java.lang.String.format("%d.jpg",i) );
+						sendMessageRequest.setMessageGroupId("messageGroup1");
+						com.amazonaws.services.sqs.model.SendMessageResult sendMessageResult = sqs
+								.sendMessage(sendMessageRequest);
+					}
+				}
+			} catch(AmazonRekognitionException e) {
+				e.printStackTrace();
+			}
+		}
+		com.amazonaws.services.sqs.model.SendMessageRequest sendMessageRequest = new com.amazonaws.services.sqs.model.SendMessageRequest(
+				myqueue, "-1");
+		sendMessageRequest.setMessageGroupId("messageGroup1");
+		sendMessageRequest.setMessageDeduplicationId("-1");
+		com.amazonaws.services.sqs.model.SendMessageResult sendMessageResult = sqs
+				.sendMessage(sendMessageRequest);
+	}
+}
+
