@@ -25,3 +25,5 @@ import com.amazonaws.services.rekognition.model.S3Object;
 import com.amazonaws.services.rekognition.model.DetectTextRequest;
 import com.amazonaws.services.rekognition.model.DetectTextResult;
 import com.amazonaws.services.rekognition.model.TextDetection;
+import java.util.HashMap;
+import java.util.List;
