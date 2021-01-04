@@ -27,3 +27,8 @@ import com.amazonaws.services.rekognition.model.DetectTextResult;
 import com.amazonaws.services.rekognition.model.TextDetection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
+
+import java.io.FileWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
