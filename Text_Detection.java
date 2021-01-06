@@ -32,3 +32,24 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+
+public class Text {
+
+	public static void main(String[] args)throws Exception {
+
+		String bucket = "bucketname";
+		String myqueue = "queuename";
+		// Read credentials from cre.txt file 		
+		HashMap<String, String> credentials = new HashMap<String, String>();
+		try {
+			File myObj = new File("cre.txt");
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNextLine()) {
+				String line = myReader.nextLine();
+				if(line != "") {
+					String[] data = line.split(" = ");
+					if(data.length == 2) {
+						credentials.put(data[0], data[1]);  
+					}   
+				}
+			}
