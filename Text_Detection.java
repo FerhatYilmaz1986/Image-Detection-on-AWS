@@ -67,3 +67,9 @@ myReader.close();
 		AmazonSQS sqs = AmazonSQSClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(creds))
 				.withRegion(Regions.US_EAST_1).build();
+
+// Retrieve image information from SQS and detect text in the images
+		final ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+				myqueue);
+		receiveMessageRequest.setMaxNumberOfMessages(10);
+		FileWriter FileWrite = new FileWriter("output.txt", false);
