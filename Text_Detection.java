@@ -58,3 +58,12 @@ myReader.close();
 			System.out.println("Credentials file can not be read.");
 			e.printStackTrace();
 		}
+
+// Create clients for AWS services using Session Credentials that read from the file in previous step
+		BasicSessionCredentials  creds = new BasicSessionCredentials (credentials.get("accesskeyid"),credentials.get("secretaccesskey"),credentials.get("sessiontoken")); 
+		AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(creds))
+				.withRegion(Regions.US_EAST_1).build();
+		AmazonSQS sqs = AmazonSQSClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(creds))
+				.withRegion(Regions.US_EAST_1).build();
