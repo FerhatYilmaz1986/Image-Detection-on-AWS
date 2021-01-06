@@ -53,3 +53,8 @@ public class Text {
 					}   
 				}
 			}
+myReader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Credentials file can not be read.");
+			e.printStackTrace();
+		}
