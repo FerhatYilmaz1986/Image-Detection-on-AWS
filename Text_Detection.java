@@ -86,3 +86,38 @@ final ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
 							myqueue, messageReceiptHandle));
 					FileWrite.close();
 					System.exit(0);
+}
+				for (int i = 1; i <= 10; i++) {
+
+					if (java.lang.String.format("%d.jpg",i).contains(message.getBody())) {
+						System.out.println("Receieved Image: " + java.lang.String.format("%d.jpg",i));
+						FileWrite.write(message.getBody());
+						FileWrite.write("\t");
+						DetectTextRequest request = new DetectTextRequest().withImage(
+								new Image().withS3Object(new S3Object().withName(java.lang.String.format("%d.jpg",i)).withBucket(bucket)));
+						try {
+							DetectTextResult textresult = rekognitionClient.detectText(request);
+							List<TextDetection> textDetections = textresult.getTextDetections();
+							for (TextDetection text : textDetections) {
+								if (text.getConfidence() >= 90 && text.getId() == 0) {
+									System.out.println("Detected: " + text.getDetectedText());
+									FileWrite.write(text.getDetectedText());
+									System.out.println();
+								}
+							}
+						} catch (AmazonRekognitionException e) {
+							e.printStackTrace();
+						}
+						final String messageReceiptHandle = message.getReceiptHandle();
+						sqs.deleteMessage(new DeleteMessageRequest(
+								myqueue, messageReceiptHandle));
+						FileWrite.write("\n");
+					}
+				}
+				System.out.println();
+			}
+		}
+
+	}
+}
+
