@@ -73,3 +73,16 @@ myReader.close();
 				myqueue);
 		receiveMessageRequest.setMaxNumberOfMessages(10);
 		FileWriter FileWrite = new FileWriter("output.txt", false);
+final ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+				myqueue);
+		receiveMessageRequest.setMaxNumberOfMessages(10);
+		FileWriter FileWrite = new FileWriter("output.txt", false);
+		while (true) {
+			List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
+			for ( Message message : messages) {
+				if (message.getBody().contains("-1") == true) {
+					String messageReceiptHandle = message.getReceiptHandle();
+					sqs.deleteMessage(new DeleteMessageRequest(
+							myqueue, messageReceiptHandle));
+					FileWrite.close();
+					System.exit(0);
