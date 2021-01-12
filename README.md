@@ -6,4 +6,4 @@ Image detection app on AWS EC2 instance, using SQS&amp;Rekognition
  3. Create SQS FIFO queue on AWS console
  4. Create two java files. One for image detection and other for text detection.  
  5. Export them as executable .jar file
- 
+ 6. Create credentials file for AWS account 
