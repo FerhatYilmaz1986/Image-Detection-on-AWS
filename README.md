@@ -8,3 +8,4 @@ Image detection app on AWS EC2 instance, using SQS&amp;Rekognition
  5. Export them as executable .jar file  
  6. Create credentials file for AWS account  
  7. Connect to EC-2 instances (using putty for window)
+ 8. Install java to both instances
